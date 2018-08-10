@@ -1,7 +1,7 @@
 {
   "name": "minemark-api-signup",
   "version": "1.0.0",
-  "description": "API to create user by filling signupform in both mobile and web application",
+  "description": "API to create user by filling signup form in both mobile and web application",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
