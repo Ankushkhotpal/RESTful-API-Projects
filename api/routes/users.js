@@ -13,7 +13,8 @@ router.get('/', (req, res, next) => {
     //     message: 'Handeling GET requests to /orders'
     // });
     User.find()
-        .select('email password _id')
+        // .select('email password _id')
+        .select()
         .exec()
         .then(docs => {
             res.status(200).json({
@@ -24,10 +25,21 @@ router.get('/', (req, res, next) => {
                         _id: doc._id,
                         email: doc.email,
                         password: doc.password,
-                        // request: {
-                        //     type: 'GET',
-                        //     url: 'http://localhost:3000/user/' + doc._id
-                        // }
+                        phoneno: doc.phoneno,
+                        fullname: doc.fullname,
+                        gender: doc.gender,
+                        dob: doc.dob,
+                        district: doc.district,
+                        state: doc.state,
+                        professionalexpinyr: doc.professionalexpinyr,
+                        professionalexpinmon: doc.professionalexpinmon,
+                        skillarea: doc.skillarea,
+                        actualskill: doc.actualskill,
+                        readytoallocate: doc.readytoallocate,
+                        request: {
+                            type: 'GET',
+                            url: 'http://localhost:3001/user/' + doc._id
+                        }
                     }
                 })
             });
@@ -45,7 +57,8 @@ router.get('/', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
     User.find({
-            email: req.body.email
+            email: req.body.email,
+            // phoneno: req.body.phoneno
         })
         .exec()
         .then(user => {
@@ -63,15 +76,26 @@ router.post('/signup', (req, res, next) => {
                         const user = new User({
                             _id: new mongoose.Types.ObjectId(),
                             email: req.body.email,
-                            password: hash
-                            // password: req.body.password
+                            password: hash,
+                            phoneno: req.body.phoneno,
+                            fullname: req.body.fullname,
+                            gender: req.body.gender,
+                            dob: req.body.dob,
+                            district: req.body.district,
+                            state: req.body.state,
+                            professionalexpinyr: req.body.professionalexpinyr,
+                            professionalexpinmon: req.body.professionalexpinmon,
+                            skillarea: req.body.skillarea,
+                            actualskill: req.body.actualskill,
+                            readytoallocate: req.body.readytoallocate
+                           
                         });
                         user
                             .save()
                             .then(result => {
                                 console.log(result);
                                 res.status(201).json({
-                                    message: "User created"
+                                    message: "User profile created"
                                 });
                             })
                             .catch(err => {
@@ -139,7 +163,7 @@ router.delete('/:userId', (req, res, next) => {
         .exec()
         .then(result => {
             res.status(200).json({
-                message: 'User deleted'
+                message: 'User profile deleted'
             });
         })
         .catch(err => {
