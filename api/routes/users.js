@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 
@@ -54,16 +54,17 @@ router.post('/signup', (req, res, next) => {
                     message: 'eMail already exists'
                 });
             } else {
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
-                    if (err) {
-                        return res.status(500).json({
-                            error: err
-                        });
-                    } else {
+                // bcrypt.hash(req.body.password, 10, (err, hash) => {
+                //     if (err) {
+                //         return res.status(500).json({
+                //             error: err
+                //         });
+                    // } else {
                         const user = new user({
                             _id: new mongoose.Types.ObjectId(),
                             email: req.body.email,
-                            password: hash
+                            // password: hash
+                            password: req.body.password
                         });
                         Usersignup
                             .save()
@@ -79,8 +80,8 @@ router.post('/signup', (req, res, next) => {
                                     error: err
                                 });
                             });
-                    }
-                });
+                    // }
+                // });
             }
         });
 });
